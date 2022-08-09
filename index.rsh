@@ -85,7 +85,7 @@ export const main = Reach.App(() => {
       .case(Owner,
         (() => {
           const isSale = this == owner && transferOption == SALE;
-          const salePrice = isSale ? declassify(interact.salePrice()) : 0;
+          const salePrice = isSale ? declassify(interact.salePrice()) % 2 : 0;
           return {
             msg: salePrice,
             when: isSale,

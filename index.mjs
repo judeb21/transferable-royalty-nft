@@ -80,10 +80,9 @@ interact.transferOption = async () => {
     'What do you want to do with the NFT? [Gift / Sell / Auction / Keep]',
     (x) => x.toLowerCase().startsWith('g') ? 0 : 
            x.toLowerCase().startsWith('s') ? 1 :
-           x.toLowerCase().startsWith('a') ? 2 :
-                                             3
+                                             2
   );
-  if (option == 3) {
+  if (option == 2) {
     process.exit(0);
   }
   return option;
