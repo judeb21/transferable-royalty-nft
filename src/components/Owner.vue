@@ -3,11 +3,13 @@
     <h1 class="mb-4">Interact with an NFT</h1>
     <Attach v-if="!contract" />
     <template v-else-if="id && address">
-      <h4 class="mb-2">{{ nftName }}</h4>
-      <p class="text-muted mb-2">{{ contractInfo }}</p>
+      <h4 class="mb-2">Nft Name: {{ nftName }}</h4>
+      <p class="text-muted mb-2">Contract Info: {{ contractInfo }}</p>
       <img class="nft-img mb-3" :src="url" v-if="url" />
       <p class="mb-0">
-        {{ address[0] }}<b-icon icon="wallet2" class="mx-1" />{{ address[1] }}
+        Address: {{ address[0] }}<b-icon icon="wallet2" class="mx-1" />{{
+          address[1]
+        }}
       </p>
       <div v-if="isOwner" class="mb-4">
         <p class="text-muted mb-4">You own this NFT</p>

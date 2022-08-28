@@ -10,7 +10,7 @@
       <template v-else>
         <img class="icon" src="/img/algorand_white.svg" />
         <div class="p-2 mr-3">{{ balance }}</div>
-        <b-button variant="outline-info" @click="disconnect"
+        <b-button variant="outline-info" @click="oneClick(fullAddress)"
           >{{ address[0] }}<b-icon icon="wallet2" class="mx-1" />{{
             address[1]
           }}</b-button
@@ -25,6 +25,14 @@ import { mapState } from "vuex";
 
 export default {
   name: "NavBar",
+  data() {
+    return {
+      result: [],
+      delay: 700,
+      clicks: 0,
+      timer: null,
+    };
+  },
   computed: {
     ...mapState({
       account: (state) => state.account,
@@ -35,6 +43,11 @@ export default {
       const address = this.account.networkAccount.addr;
       return [address.substring(0, 5), address.substring(53)];
     },
+    fullAddress() {
+      if (!this.account) return undefined;
+      const address = this.account.networkAccount.addr;
+      return address;
+    },
   },
   methods: {
     connect() {
@@ -42,6 +55,29 @@ export default {
     },
     disconnect() {
       this.$store.dispatch("disconnect");
+    },
+    async copyParticipantAddress(fullAddress) {
+      try {
+        await navigator.clipboard.writeText(fullAddress);
+        alert("Copied wallet address");
+      } catch ($e) {
+        alert("Can not copy address");
+      }
+    },
+    oneClick(event) {
+      this.clicks++;
+      if (this.clicks === 1) {
+        this.timer = setTimeout(() => {
+          this.result.push(event.type);
+          this.disconnect();
+          this.clicks = 0;
+        }, this.delay);
+      } else {
+        clearTimeout(this.timer);
+        this.result.push("dblclick");
+        this.clicks = 0;
+        this.copyParticipantAddress(this.fullAddress);
+      }
     },
   },
 };
