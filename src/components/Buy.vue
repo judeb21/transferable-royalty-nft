@@ -51,10 +51,10 @@ export default {
     this.price = reach.formatCurrency(price[1]);
   },
   methods: {
-    buyNFT() {
+    async buyNFT() {
       this.isLoading = true;
-      // console.log(ownerInterface);
       this.contract.p.Owner(Object.assign(ownerInterface, this));
+      await this.$store.dispatch("setBalance");
     },
     buy() {
       return;

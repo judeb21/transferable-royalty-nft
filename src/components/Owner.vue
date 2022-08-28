@@ -106,6 +106,7 @@ export default {
       const [owner, option] = await Promise.all([
         await this.contract.v.NFT.owner(),
         await this.contract.v.NFT.option(),
+        await this.$store.dispatch("setBalance"),
       ]);
       if (!owner[1]) return;
       this.owner = reach.formatAddress(owner[1]);

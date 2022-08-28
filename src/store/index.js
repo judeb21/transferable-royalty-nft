@@ -54,6 +54,16 @@ const store = new Vuex.Store({
       const contractInfo = await contract.getInfo();
       context.commit("SET_CONTRACT", { contract, contractInfo });
     },
+    async setBalance(context) {
+      if (context.state.account) {
+        const account = await reach.connectAccount(
+          context.state.account.networkAccount
+        );
+        const balanceAtomic = await reach.balanceOf(account);
+        const balance = reach.formatCurrency(balanceAtomic, 2);
+        context.commit("SET_BALANCE", balance);
+      }
+    },
     async clearContract(context) {
       context.commit("SET_CONTRACT", {
         contract: undefined,
